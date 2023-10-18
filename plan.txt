@@ -1,0 +1,4 @@
+-get API data for stocks 
+-be able to pass in a specific ticker
+-key into closing values 
+-
