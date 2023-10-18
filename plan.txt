@@ -1,8 +1,10 @@
+//Friday - Add in D3 functionality for one graph 
+//Monday - add Second graph 
+//Tuesday - Styling 
+//Wednesday - Convexity Calculation 
 
 
-
--timebound closing values   
--be able to pass in a specific ticker
-
-
-
+//hover 
+//other data sources
+//convexity  
+//sharpe ratios 

@@ -9,7 +9,65 @@
 <body>
     <h1> Correlation Calculator </h1>
     <h2> Google (GOOG) </h2> 
+    <div id="d3-container"></div>
     <figure class="stocks"></figure>
+    <script type="module">
+        import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+        import Stocks from './stocks';
+
+        const container = d3.select("#d3-container");
+        
+        const stock = new Stocks('GOOG');
+        stock.getData().then(data => {
+            const stockData = [];
+            for(let date in data["Monthly Time Series"]) {
+                stockData.push({
+                    date: new Date(date),
+                    price: +data["Monthly Time Series"][date]['4. close']
+                });
+            }
+            
+            const width = 500;
+            const height = 500;
+            const marginTop = 20;
+            const marginRight = 20;
+            const marginBottom = 30;
+            const marginLeft = 20;
+
+            const x = d3.scaleUTC()
+                .domain(d3.extent(stockData, d => d.date))
+                .range([marginLeft, width - marginRight]);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(stockData, d => d.price)])
+                .range([height - marginBottom, marginTop]);
+
+            const svg = d3.create("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+            svg.append("g")
+                .attr("transform", `translate(0, ${height - marginBottom})`)
+                .call(d3.axisBottom(x));
+
+            svg.append("g")
+                .attr("transform", `translate(${marginLeft},0)`)
+                .call(d3.axisLeft(y));
+
+            const line = d3.line()
+                .x(d => x(d.date))
+                .y(d => y(d.price));
+
+            svg.append("path")
+                .datum(stockData)
+                .attr("fill", "none")
+                .attr("stroke", "blue")
+                .attr("stroke-width", 1.5)
+                .attr("d", line);
+
+            container.append(() => svg.node());
+        });
+    </script>
     <script type="module" src="./dist/main.js" defer></script>
 </body>
 </html>
