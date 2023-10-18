@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 class Stocks {
     constructor(ticker) {
@@ -16,6 +16,10 @@ class Stocks {
             console.error('Error fetching data:', error);
         }
     }
+}
+
+export default Stocks;
+
 
     // async getPrices() {
     //     this.storedData = await this.getData();
@@ -29,6 +33,3 @@ class Stocks {
     //     }
     //     console.log(closingPrices);
     // }
-}
-
-export default Stocks;
