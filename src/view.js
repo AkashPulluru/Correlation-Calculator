@@ -1,4 +1,4 @@
-import { select, scaleLinear, scaleUtc, extent, max, axisBottom, axisLeft, line as d3Line, create } from 'd3';
+import { select, scaleLinear, scaleUtc, extent, max, axisBottom, axisLeft, line as drawLine, create } from 'd3';
 
 
 class View {
@@ -23,6 +23,7 @@ class View {
             });
         }
 
+        //note to self: this is where we're grabbing the d3 element from the html doc  
         const container = select("#d3-container");
 
         const width = 500;
@@ -30,8 +31,11 @@ class View {
         const marginTop = 20;
         const marginRight = 20;
         const marginBottom = 30;
-        const marginLeft = 20;
+        const marginLeft = 50;
 
+        //REVISIT - will not accept custom timescales, so bounding it by extent for now 
+
+        //all the variables called below are initialized right above 
         const x = scaleUtc()
             .domain(extent(stockData, d => d.date))
             .range([marginLeft, width - marginRight]);
@@ -44,6 +48,9 @@ class View {
             .attr("width", width)
             .attr("height", height);
 
+        //g is like "div" for html - container holding elements 
+        //transform element lets you do the translation transformations
+        //translate is a simple linear / scalar transformation
         svg.append("g")
             .attr("transform", `translate(0, ${height - marginBottom})`)
             .call(axisBottom(x));
@@ -52,13 +59,15 @@ class View {
             .attr("transform", `translate(${marginLeft},0)`)
             .call(axisLeft(y));
 
-            const line = d3Line()
+            const line = drawLine()
             .x(d => x(d.date))
             .y(d => y(d.price));
+
         svg.append("path")
+        //iterates through individual stock data
             .datum(stockData)
             .attr("fill", "none")
-            .attr("stroke", "blue")
+            .attr("stroke", "red")
             .attr("stroke-width", 1.5)
             .attr("d", line);
 
