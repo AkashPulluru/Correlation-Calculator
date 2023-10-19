@@ -19,10 +19,10 @@ Technologies, Libraries, and APIs
 -In the future, this project will seek to use other public APIs for other asset price data 
 
 Implementation Timeline 
--Friday: Finish d3 rendering of one graph, onboard a second graph if possible
--Monday: Add second graph into presentation
--Tuesday: Do correlation calculations, add third graph 
--Wednesday: Styling, finishing touches 
--Thursday: Bonus features 
+-Friday: Onboard a second graph using d3, update internal logic 
+-Monday: Do correlation calculations, add third graph
+-Tuesday: Styling, finishing touches 
+-Wednesday: (bonus) Add hover element, add other data feeds   
+-Thursday: Bonus features (convexity, ROI, etc)
 
 Please see a wireframe here https://wireframe.cc/6QfusH
